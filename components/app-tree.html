@@ -1,0 +1,39 @@
+<link rel="import" href="/knockout.html" />
+<link rel="import" href="/knockout-webcomponents.html" />
+<link rel="import" href="/knockout-flatbind.html" />
+<link rel="import" href="/bindings/cssmod.html" />
+
+<script type="text/javascript">
+define(['knockout'], function (ko) {
+    return function ViewModel() {
+        this.items = ko.observable([
+            { name: 'foo', isActive: true },
+            { name: 'bar', isActive: false },
+            { name: 'buz', isActive: false }
+        ]);
+    };
+});
+</script>
+
+<template data-component="app-tree" is="knockout-component">
+    <ul class="tree" data-bind-foreach="items">
+        <li>
+            <a class="tree__item"
+               href="#"
+               data-bind-text="name"
+               data-bind-cssmod.active="isActive">
+           </a>
+        </li>
+    </ul>
+</template>
+
+<style>
+    .tree {
+        list-style-type: none;
+    }
+
+    .tree__item--active {
+        color: black;
+        font-weight: bold;
+    }
+</style>

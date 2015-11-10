@@ -1,0 +1,43 @@
+{
+  "name": "knockout-html-import",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "~1.9.0",
+    "eslint-plugin-html": "~1.1.0",
+    "jscs": "~2.5.1"
+  },
+  "scripts": {
+    "lint:jscs": "jscs .",
+    "lint:eslint": "eslint . --ext .js,.html",
+    "start": "python3 -m http.server"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "jscsConfig": {
+    "extract": [
+      "*.html"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "browser": true,
+      "amd": true
+    },
+    "plugins": [
+      "html"
+    ],
+    "rules": {
+      "no-unused-vars": [
+        2,
+        {
+          "args": "after-used",
+          "argsIgnorePattern": "^_"
+        }
+      ]
+    }
+  }
+}

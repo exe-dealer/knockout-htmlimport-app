@@ -1,0 +1,21 @@
+<link rel="import" href="/knockout.html" />
+
+<script type="text/javascript">
+define(['knockout'], function (ko) {
+    document.registerElement('knockout-component', {
+        extends: 'template',
+        prototype: Object.create(HTMLTemplateElement.prototype, {
+            createdCallback: {
+                value: createdCallback
+            }
+        })
+    });
+
+    function createdCallback() {
+        ko.components.register(this.dataset.component, {
+            template: { element: this },
+            viewModel: define._modules[this.baseURI]
+        });
+    }
+});
+</script>
