@@ -1,0 +1,39 @@
+<script src="http://knockoutjs.com/downloads/knockout-3.3.0.debug.js" as="knockout"></script>
+<script>
+require(['knockout'], function (ko) {
+    window.ko = ko;
+
+    var templateElements = {};
+
+    document.registerElement('knockout-template', {
+        extends: 'script',
+        prototype: Object.create(HTMLScriptElement.prototype, {
+            createdCallback: {
+                value: function createdCallback() {
+                    templateElements[this.id] = this;
+                }
+            }
+        })
+    });
+
+    ko.templateEngine.prototype.makeTemplateSource = (function (originalFunction) {
+        return function (template, templateDocument) {
+            if (typeof template == 'string' && template in templateElements) {
+                templateDocument = templateElements[template].ownerDocument;
+            }
+            return originalFunction.call(this, template, templateDocument);
+        };
+    })(ko.templateEngine.prototype.makeTemplateSource);
+
+    ko.components.loaders.unshift({
+        loadTemplate: function (componentName, templateConfig, callback) {
+            if (typeof templateConfig.element == 'string' &&
+                templateElements[templateConfig.element])
+            {
+                templateConfig.element = templateElements[templateConfig.element];
+            }
+            callback(null);
+        }
+    });
+});
+</script>

@@ -1,0 +1,33 @@
+<link rel="import" href="../knockout.html" />
+<link rel="import" href="../bindings/cssmod.html" />
+<link rel="import" href="../components/app-tree.html" />
+
+<style>
+.app-shell {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.app-shell__tree {
+    display: block;
+    margin: 2em;
+}
+</style>
+
+<script id="app-shell-template" type="text/html" is="knockout-template">
+    <div class="app-shell">
+        <app-tree class="app-shell__tree"></app-tree>
+    </div>
+</script>
+
+<script>
+require(['knockout'], function (ko) {
+    ko.components.register('app-shell', {
+        synchronous: true,
+        template: { element: 'app-shell-template' }
+    });
+});
+</script>

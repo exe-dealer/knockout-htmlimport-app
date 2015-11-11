@@ -1,0 +1,47 @@
+<link rel="import" href="../knockout.html" />
+<link rel="import" href="../knockout-flatbind.html" />
+<link rel="import" href="../bindings/cssmod.html" />
+
+<style>
+.app-tree {
+    list-style-type: none;
+}
+
+.app-tree__item--active {
+    color: black;
+    font-weight: bold;
+}
+</style>
+
+<script id="app-tree-template" type="text/html" is="knockout-template">
+    <ul class="app-tree" data-bind-foreach="nodes">
+        <li>
+            <a class="app-tree__item"
+               href="#"
+               data-bind-text="name"
+               data-bind-cssmod.active="isActive">
+           </a>
+        </li>
+        <!-- ko template: { name: 'app-tree-template' } --><!-- /ko -->
+    </ul>
+</script>
+
+<script>
+require(['knockout'], function (ko) {
+    ko.components.register('app-tree', {
+        synchronous: true,
+        template: { element: 'app-tree-template' },
+        viewModel: ViewModel
+    });
+
+    function ViewModel() {
+        this.nodes = ko.observable([
+            { name: 'foo', isActive: true, nodes: [
+                { name: 'child foo', isActive: true, nodes: [] }
+            ] },
+            { name: 'bar', isActive: false, nodes: [] },
+            { name: 'buz', isActive: false, nodes: [] }
+        ]);
+    }
+});
+</script>

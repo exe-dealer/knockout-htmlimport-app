@@ -1,7 +1,7 @@
 <link rel="import" href="../knockout.html" />
 
-<script as="knockout-cssmod">
-define(['knockout'], function (ko) {
+<script>
+require(['knockout'], function (ko) {
     ko.bindingHandlers['cssmod'] = {
         'before': ['css'],
         'init': function (element, valueAccessor) {
