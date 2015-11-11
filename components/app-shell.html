@@ -1,16 +1,25 @@
 <link rel="import" href="../knockout.html" />
-<link rel="import" href="../knockout-webcomponents.html" />
 <link rel="import" href="../bindings/cssmod.html" />
 <link rel="import" href="../components/app-tree.html" />
+<link rel="import" href="../template-module.html" />
 
-<template data-component="app-shell" is="knockout-component">
-    <div class="shell">
-        <app-tree class="shell__tree"></app-tree>
+<template id="app-shell-template" is="template-module">
+    <div class="app-shell">
+        <app-tree class="app-shell__tree"></app-tree>
     </div>
 </template>
 
+<script type="text/javascript">
+define(['knockout', 'app-shell-template'], function (ko, template) {
+    ko.components.register('app-shell', {
+        synchronous: true,
+        template: template
+    });
+});
+</script>
+
 <style>
-    .shell {
+    .app-shell {
         position: fixed;
         top: 0;
         bottom: 0;
@@ -18,7 +27,7 @@
         right: 0;
     }
 
-    .shell__tree {
+    .app-shell__tree {
         display: block;
         margin: 2em;
     }

@@ -1,0 +1,18 @@
+<script>
+    document.registerElement('template-module', {
+        extends: 'template',
+        prototype: Object.create(HTMLTemplateElement.prototype, {
+            createdCallback: {
+                value: createdCallback
+            }
+        })
+    });
+
+    function createdCallback() {
+        var modid = this.id;
+        if (modid in define._modules) {
+            throw new Error('The module "' + modid + '" has already been defined');
+        }
+        define._modules[modid] = { element: this };
+    }
+</script>
