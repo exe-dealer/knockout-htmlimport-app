@@ -3,23 +3,19 @@
 require(['knockout'], function (ko) {
     window.ko = ko;
 
-    var templateElements = {};
-
-    document.registerElement('knockout-template', {
-        extends: 'script',
-        prototype: Object.create(HTMLScriptElement.prototype, {
-            createdCallback: {
-                value: function createdCallback() {
-                    templateElements[this.id] = this;
-                }
-            }
-        })
-    });
+    function getElementByIdWithinImports(id, linkElem) {
+        var doc = linkElem && linkElem.import || document;
+        return doc.getElementById(id) ||
+            [].slice.call(doc.querySelectorAll('link[rel="import"]'))
+                .map(getElementByIdWithinImports.bind(null, id))
+                .filter(Boolean)
+                [0];
+    }
 
     ko.templateEngine.prototype.makeTemplateSource = (function (originalFunction) {
         return function (template, templateDocument) {
-            if (typeof template == 'string' && template in templateElements) {
-                templateDocument = templateElements[template].ownerDocument;
+            if (typeof template == 'string') {
+                templateDocument = getElementByIdWithinImports(template).ownerDocument;
             }
             return originalFunction.call(this, template, templateDocument);
         };
@@ -27,10 +23,8 @@ require(['knockout'], function (ko) {
 
     ko.components.loaders.unshift({
         loadTemplate: function (componentName, templateConfig, callback) {
-            if (typeof templateConfig.element == 'string' &&
-                templateElements[templateConfig.element])
-            {
-                templateConfig.element = templateElements[templateConfig.element];
+            if (typeof templateConfig.element == 'string') {
+                templateConfig.element = getElementByIdWithinImports(templateConfig.element);
             }
             callback(null);
         }
