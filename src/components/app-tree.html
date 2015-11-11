@@ -37,7 +37,7 @@ require(['knockout'], function (ko) {
     function ViewModel() {
         this.nodes = ko.observable([
             { name: 'foo', isActive: true, nodes: [
-                { name: 'child foo', isActive: true, nodes: [] }
+                { name: 'child foo', isActive: false, nodes: [] }
             ] },
             { name: 'bar', isActive: false, nodes: [] },
             { name: 'buz', isActive: false, nodes: [] }
