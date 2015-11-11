@@ -15,11 +15,11 @@
     </ul>
 </template>
 
-<script>
-define(['knockout', 'app-tree-template'], function (ko, template) {
+<script as="app-tree-component">
+define(['knockout', 'app-tree-template'], function (ko, templateElem) {
     ko.components.register('app-tree', {
         synchronous: true,
-        template: template,
+        template: { element: templateElem },
         viewModel: ViewModel
     });
 

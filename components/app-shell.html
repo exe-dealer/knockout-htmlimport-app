@@ -9,11 +9,11 @@
     </div>
 </template>
 
-<script type="text/javascript">
-define(['knockout', 'app-shell-template'], function (ko, template) {
+<script as="app-shell-component">
+define(['knockout', 'app-shell-template'], function (ko, templateElem) {
     ko.components.register('app-shell', {
         synchronous: true,
-        template: template
+        template: { element: templateElem }
     });
 });
 </script>

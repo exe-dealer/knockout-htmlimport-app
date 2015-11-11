@@ -13,6 +13,6 @@
         if (modid in define._modules) {
             throw new Error('The module "' + modid + '" has already been defined');
         }
-        define._modules[modid] = { element: this };
+        define._modules[modid] = this;
     }
 </script>
